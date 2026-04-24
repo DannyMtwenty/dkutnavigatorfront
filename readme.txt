@@ -36,3 +36,9 @@ npm install date-fns lodash
 
 # Dev dependencies
 npm install -D @types/leaflet
+
+# Notifications/Toasts
+npm install react-hot-toast
+
+#create multiple folders
+mkdir -p src/{api,components/{common,buildings,locations,facilities,maps},hooks,layouts,pages,store,utils,styles}
