@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import LocationPicker from './../locations/LocationPicker';
 import { useForm } from 'react-hook-form';
 import {
   Dialog,
@@ -18,6 +19,7 @@ function BuildingForm({ open, onClose, onSubmit, initialData = null }) {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: initialData || {
@@ -54,6 +56,15 @@ function BuildingForm({ open, onClose, onSubmit, initialData = null }) {
     reset();
     onClose();
   };
+
+  const KENYA_BOUNDS = {
+  minLat: -4.9,
+  maxLat: 5.1,
+  minLng: 33.9,
+  maxLng: 42.1,
+};
+const latitude = watch('latitude');
+const longitude = watch('longitude');
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
@@ -98,37 +109,66 @@ function BuildingForm({ open, onClose, onSubmit, initialData = null }) {
             </Grid>
 
             {/* Latitude */}
-            <Grid item xs={12} sm={6}>
-              <TextField
+          <Grid item xs={12} sm={6}>
+            <TextField
                 fullWidth
-                type="number"
+                type="text"
                 label="Latitude"
-                inputProps={{ step: 'any' }}
+                inputProps={{ inputMode: 'decimal' }}
                 {...register('latitude', {
-                  required: 'Latitude is required',
-                  min: { value: -90, message: 'Invalid latitude' },
-                  max: { value: 90, message: 'Invalid latitude' },
+                required: 'Latitude is required',
+                setValueAs: (value) => value === '' ? undefined : Number(value),
+                validate: (value) => {
+                    if (isNaN(value)) return 'Latitude must be a valid number';
+
+                    if (value < KENYA_BOUNDS.minLat || value > KENYA_BOUNDS.maxLat) {
+                    return 'Latitude must be within Kenya';
+                    }
+
+                    return true;
+                },
                 })}
                 error={!!errors.latitude}
                 helperText={errors.latitude?.message}
-              />
+            />
             </Grid>
-
+            <Grid item xs={12}>
+            <LocationPicker
+                latitude={Number(latitude)}
+                longitude={Number(longitude)}
+                setValue={setValue}
+            />
+            </Grid>
             {/* Longitude */}
-            <Grid item xs={12} sm={6}>
-              <TextField
+           <Grid item xs={12} sm={6}>
+            <TextField
                 fullWidth
-                type="number"
+                type="text"
                 label="Longitude"
-                inputProps={{ step: 'any' }}
+                inputProps={{ inputMode: 'decimal' }}
                 {...register('longitude', {
-                  required: 'Longitude is required',
-                  min: { value: -180, message: 'Invalid longitude' },
-                  max: { value: 180, message: 'Invalid longitude' },
+                required: 'Longitude is required',
+                setValueAs: (value) => value === '' ? undefined : Number(value),
+                validate: (value) => {
+                    if (isNaN(value)) return 'Longitude must be a valid number';
+
+                    if (value < KENYA_BOUNDS.minLng || value > KENYA_BOUNDS.maxLng) {
+                    return 'Longitude must be within Kenya';
+                    }
+
+                    return true;
+                },
                 })}
                 error={!!errors.longitude}
                 helperText={errors.longitude?.message}
-              />
+            />
+            </Grid>
+            <Grid item xs={12}>
+            <LocationPicker
+                latitude={Number(latitude)}
+                longitude={Number(longitude)}
+                setValue={setValue}
+            />
             </Grid>
 
             {/* Address */}

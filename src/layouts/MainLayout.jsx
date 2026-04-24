@@ -51,7 +51,7 @@ function MainLayout() {
     <Box>
       <Toolbar>
         <Typography variant="h6" noWrap component="div">
-          DKUT Nav
+          DKUT Navigator
         </Typography>
       </Toolbar>
       <List>
@@ -91,7 +91,7 @@ function MainLayout() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            DKUT Campus Navigation System
+            DKUT Navigator
           </Typography>
         </Toolbar>
       </AppBar>

@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { Routes, Route } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
 
@@ -12,6 +13,7 @@ import Facilities from './pages/Facilities'
 import Search from './pages/Search'
 import Map from './pages/Map'
 import NotFound from './pages/NotFound'
+import 'leaflet/dist/leaflet.css';
 
 function App() {
   return (

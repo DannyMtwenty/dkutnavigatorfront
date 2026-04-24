@@ -29,7 +29,7 @@ function BuildingCard({ building, onEdit, onDelete, showActions = false }) {
     navigate(`/buildings/${building.buildingId}`);
   };
 
-  const defaultImage = 'https://via.placeholder.com/400x250?text=Building+Image';
+  const defaultImage = 'https://imgs.search.brave.com/LtHc-1L0M2zU-5T5WCfaJZ2xKlWe9xU4HM7ilV87pAk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/aWNvbnNjb3V0LmNv/bS9pY29uL3ByZW1p/dW0vcG5nLTI1Ni10/aHVtYi9idWlsZGlu/Zy1pY29uLXN2Zy1k/b3dubG9hZC1wbmct/MTQ5NTI5MS5wbmc_/Zj13ZWJwJnc9MTI4';
 
   return (
     <Card
