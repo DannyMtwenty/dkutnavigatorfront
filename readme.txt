@@ -40,5 +40,8 @@ npm install -D @types/leaflet
 # Notifications/Toasts
 npm install react-hot-toast
 
+# Icons
+npm install lucide-react
+
 #create multiple folders
 mkdir -p src/{api,components/{common,buildings,locations,facilities,maps},hooks,layouts,pages,store,utils,styles}

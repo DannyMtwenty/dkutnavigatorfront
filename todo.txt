@@ -1,0 +1,4 @@
+Complete Buildings page with list, cards, and API integration?
+Complete Locations page with search and filters?
+Interactive Map component with Leaflet?
+Complete the remaining API hooks and services?
