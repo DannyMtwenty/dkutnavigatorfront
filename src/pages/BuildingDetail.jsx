@@ -29,6 +29,7 @@ import {
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import ErrorMessage from '../components/common/ErrorMessage';
 import { useBuilding, useBuildingFloors, useBuildingLocations } from '../hooks/useBuildings';
+      const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 function BuildingDetail() {
   const { id } = useParams();
@@ -85,7 +86,13 @@ function BuildingDetail() {
               )}
             </Box>
           </div>
-          <IconButton color="primary" size="large">
+        
+             <IconButton
+                          size="large"
+                          color="primary"
+                          onClick={() => onEdit && onEdit(building)}
+                        >
+
             <EditIcon />
           </IconButton>
         </Box>
@@ -98,7 +105,7 @@ function BuildingDetail() {
           {building.imageUrl && (
             <Paper sx={{ mb: 3, overflow: 'hidden' }}>
               <img
-                src={building.imageUrl}
+                src={building.imageUrl ? `${BASE_URL}${building.imageUrl}` : undefined}
                 alt={building.buildingName}
                 style={{ width: '100%', height: 'auto', display: 'block' }}
               />

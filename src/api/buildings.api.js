@@ -1,4 +1,5 @@
 import axios from './axios.config';
+import axiosInstance from './axios.config';
 
 export const buildingsAPI = {
   // Get all buildings
@@ -26,15 +27,48 @@ export const buildingsAPI = {
   },
 
   // Create building
-  create: async (data) => {
-    const response = await axios.post('/buildings', data);
+  create: async (formData) => {
+    try {
+    const response = await axiosInstance.post('/buildings', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+
     return response.data;
+  } catch (error) {
+    console.log('API ERROR:', error.response?.data); // Log detailed error response
+    throw error;
+  }
   },
 
+// buildings.api.js
+
+
+
+  // Create building with image
+  /*
+    const response = await axiosInstance.post('/buildings', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+
+  return response.data;
+}
+}*/
+
   // Update building
-  update: async (id, data) => {
-    const response = await axios.put(`/buildings/${id}`, data);
+  update: async (id, formData) => {
+    try{
+        const response = await axios.put(`/buildings/${id}`, formData, {
+       headers: { 'Content-Type': 'multipart/form-data' },
+      });
     return response.data;
+    }
+  
+    catch (error) { 
+       console.log('API UPDATE ERROR:', error.response?.data); // Log detailed error response
+       throw error;
+    }
   },
 
   // Delete building

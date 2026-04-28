@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import 'leaflet/dist/leaflet.css';
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import {
   AppBar,

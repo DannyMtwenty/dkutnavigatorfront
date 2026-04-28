@@ -1,9 +1,25 @@
-// components/LocationPicker.jsx
-
-import React from 'react';
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import React, { useEffect } from 'react';
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  useMap,
+  useMapEvents,
+} from 'react-leaflet';
 
 const kenyaCenter = [-0.0236, 37.9062];
+
+function ResizeMap() {
+  const map = useMap();
+
+  useEffect(() => {
+    setTimeout(() => {
+      map.invalidateSize();
+    }, 300);
+  }, [map]);
+
+  return null;
+}
 
 function ClickPicker({ setValue }) {
   useMapEvents({
@@ -20,30 +36,44 @@ function ClickPicker({ setValue }) {
 }
 
 function LocationPicker({ latitude, longitude, setValue }) {
-  const hasCoords = !isNaN(latitude) && !isNaN(longitude);
+  const hasCoords =
+    !Number.isNaN(latitude) &&
+    !Number.isNaN(longitude) &&
+    latitude !== 0 &&
+    longitude !== 0;
 
   return (
-    <MapContainer
-      center={hasCoords ? [latitude, longitude] : kenyaCenter}
-      zoom={hasCoords ? 16 : 6}
+    <div
       style={{
-        height: 350,
+        height: '320px',
         width: '100%',
-        borderRadius: 12,
-        marginTop: 16,
+        marginTop: '12px',
+        marginBottom: '16px',
+        borderRadius: '12px',
+        overflow: 'hidden',
+        border: '1px solid #ddd',
       }}
     >
-      <TileLayer
-        attribution="&copy; OpenStreetMap contributors"
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
+      <MapContainer
+        center={hasCoords ? [latitude, longitude] : kenyaCenter}
+        zoom={hasCoords ? 17 : 6}
+        style={{
+          height: '100%',
+          width: '100%',
+        }}
+      >
+        <ResizeMap />
 
-      <ClickPicker setValue={setValue} />
+        <TileLayer
+          attribution="&copy; OpenStreetMap contributors"
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
 
-      {hasCoords && (
-        <Marker position={[latitude, longitude]} />
-      )}
-    </MapContainer>
+        <ClickPicker setValue={setValue} />
+
+        {hasCoords && <Marker position={[latitude, longitude]} />}
+      </MapContainer>
+    </div>
   );
 }
 

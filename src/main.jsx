@@ -6,6 +6,7 @@ import { ThemeProvider, createTheme, CssBaseline } from '@mui/material'
 import { Toaster } from 'react-hot-toast'
 import App from './App'
 import './styles/global.css'
+import 'leaflet/dist/leaflet.css';
 
 // Create React Query client
 const queryClient = new QueryClient({
