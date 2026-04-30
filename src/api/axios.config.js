@@ -7,7 +7,7 @@ const prodUrl = 'http://41.89.227.241:8100/api';
 
 //const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5129/api';
 //if in production, use the production URL, otherwise use the local URL/development URL
-const API_BASE_URL = 'http://localhost:5129/api';
+const API_BASE_URL = 'http://41.89.227.241:8100/api';     //'http://localhost:5129/api';
 
 
 

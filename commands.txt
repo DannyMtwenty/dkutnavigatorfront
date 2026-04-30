@@ -1,0 +1,2 @@
+   #cpy to server 241
+scp -r dist SDCACCOUNT@41.89.227.241:"C:\inetpub\wwwroot\dkut_nav_frontend"
