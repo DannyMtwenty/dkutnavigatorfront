@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -5,11 +7,11 @@
 }
 
 body {
-  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #F5F5F5;
 }
 
 /* Leaflet Map Styles */
@@ -17,6 +19,7 @@ body {
   width: 100%;
   height: 100%;
   border-radius: 12px;
+  z-index: 1;
 }
 
 /* Custom Scrollbar */
@@ -27,15 +30,16 @@ body {
 
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #c1c1c1;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #a8a8a8;
 }
 
 /* Loading Spinner */
@@ -44,6 +48,148 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 200px;
+}
+
+/* Transitions */
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Stats Cards */
+.stats-card {
+  transition: all 0.3s ease;
+}
+
+.stats-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Building Cards */
+.building-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.building-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #1B5E20, #4CAF50);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.building-card:hover::before {
+  opacity: 1;
+}
+
+/* Category Pills */
+.category-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.category-academic {
+  background-color: #E3F2FD;
+  color: #1976D2;
+}
+
+.category-administration {
+  background-color: #F3E5F5;
+  color: #7B1FA2;
+}
+
+.category-hostel {
+  background-color: #FCE4EC;
+  color: #C2185B;
+}
+
+.category-dining {
+  background-color: #FFF3E0;
+  color: #F57C00;
+}
+
+.category-health {
+  background-color: #FFEBEE;
+  color: #D32F2F;
+}
+
+/* Amenity Icons */
+.amenity-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: #F5F5F5;
+  color: #757575;
+  font-size: 16px;
+}
+
+.amenity-icon.active {
+  background-color: #E8F5E9;
+  color: #2E7D32;
+}
+
+/* Distance Badge */
+.distance-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background-color: #E3F2FD;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #1976D2;
+}
+
+/* Map Controls */
+.map-controls {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.map-control-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background-color: white;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.map-control-btn:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transform: translateY(-1px);
 }
 
 /* Responsive utilities */
@@ -57,4 +203,16 @@ body {
   .show-mobile-only {
     display: none !important;
   }
+}
+
+/* Route Line Animation */
+@keyframes dashAnimation {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+.route-line {
+  stroke-dasharray: 10 5;
+  animation: dashAnimation 1s linear infinite;
 }

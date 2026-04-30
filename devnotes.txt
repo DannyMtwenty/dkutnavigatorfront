@@ -1,0 +1,47 @@
+LOCATIONS(These are places users can navigate to.)
+
+🏫 Academic & Admin
+Lecture halls (e.g. LT1, LT2)
+Departments (Computer Science, Civil Eng)
+Labs (Computer labs, Engineering labs)
+Admin offices (Registrar, Finance, Admissions)
+
+🏠 Student Life
+Hostels (male/female)
+Cafeterias / dining halls
+Student center / clubs offices
+Sports fields & gym
+
+🏥 Services
+Health center / clinic
+Library
+ICT support center
+Security offices
+
+🚗 Navigation Anchors (VERY IMPORTANT)
+Parking lots
+Gates (Main gate, side gate)
+Bus stops / shuttle points
+Roads / pathways intersections
+
+Types of Facilities (Features inside locations) -- Facilities are attributes of a building or place.
+♿ Accessibility
+Wheelchair access
+Ramps
+Elevators
+Accessible toilets
+
+🛠️ Utilities
+WiFi availability
+Power outlets
+Air conditioning
+
+🍽️ Amenities
+Cafeteria inside building
+Vending machines
+Water dispensers
+
+🚻 Basic Needs
+Toilets
+Prayer rooms
+Baby care rooms

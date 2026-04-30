@@ -10,7 +10,7 @@ import Buildings from './pages/Buildings'
 import BuildingDetail from './pages/BuildingDetail'
 import Locations from './pages/Locations'
 import LocationDetail from './pages/LocationDetail'
-import Facilities from './pages/Facilities'
+//import Facilities from './pages/Facilities'
 import Search from './pages/Search'
 import Map from './pages/Map'
 import NotFound from './pages/NotFound'
@@ -25,7 +25,7 @@ function App() {
         <Route path="buildings/:id" element={<BuildingDetail />} />
         <Route path="locations" element={<Locations />} />
         <Route path="locations/:id" element={<LocationDetail />} />
-        <Route path="facilities" element={<Facilities />} />
+        {/* <Route path="facilities" element={<Facilities />} /> */}
         <Route path="search" element={<Search />} />
         <Route path="map" element={<Map />} />
         <Route path="*" element={<NotFound />} />
