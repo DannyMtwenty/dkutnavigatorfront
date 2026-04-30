@@ -1,6 +1,5 @@
 import React from 'react';
-import { useBuildings } from '../../hooks/useBuildings';
-import { useLocationTypes } from '../../hooks/useLocations';
+import { useFacilityTypes } from '../../hooks/useFacilities';
 import {
   Box,
   FormControl,
@@ -18,9 +17,8 @@ import {
 } from '@mui/material';
 import { Search as SearchIcon, FilterList as FilterIcon } from '@mui/icons-material';
 
-function LocationFilters({ filters, onFilterChange }) {
-  const { data: buildings = [] } = useBuildings();
-  const { data: locationTypes = [] } = useLocationTypes();
+function FacilityFilters({ filters, onFilterChange }) {
+  const { data: facilityTypes = [] } = useFacilityTypes();
 
   const handleChange = (field) => (event) => {
     const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
@@ -33,10 +31,8 @@ function LocationFilters({ filters, onFilterChange }) {
   const clearFilters = () => {
     onFilterChange({
       search: '',
-      buildingId: '',
-      locationType: '',
+      facilityType: '',
       isAccessible: false,
-      status: '',
     });
   };
 
@@ -79,11 +75,11 @@ function LocationFilters({ filters, onFilterChange }) {
       </Box>
 
       <Grid container spacing={2} alignItems="center">
-        {/* Search - Wider */}
-        <Grid item xs={12} md={4}>
+        {/* Search */}
+        <Grid item xs={12} md={6}>
           <TextField
             fullWidth
-            placeholder="Search locations..."
+            placeholder="Search facilities..."
             value={filters.search || ''}
             onChange={handleChange('search')}
             size="small"
@@ -101,38 +97,18 @@ function LocationFilters({ filters, onFilterChange }) {
           />
         </Grid>
 
-        {/* Building Filter - Wider */}
-        <Grid item xs={12} sm={6} md={3}>
+        {/* Facility Type Filter */}
+        <Grid item xs={12} sm={6} md={4}>
           <FormControl fullWidth size="small">
-            <InputLabel>All Buildings</InputLabel>
+            <InputLabel>All Facility Types</InputLabel>
             <Select
-              value={filters.buildingId || ''}
-              onChange={handleChange('buildingId')}
-              label="All Buildings"
+              value={filters.facilityType || ''}
+              onChange={handleChange('facilityType')}
+              label="All Facility Types"
               sx={{ borderRadius: 2 }}
             >
-              <MenuItem value="">All Buildings</MenuItem>
-              {buildings.map((building) => (
-                <MenuItem key={building.buildingId} value={building.buildingId}>
-                  {building.buildingName}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-
-        {/* Location Type Filter - Wider */}
-        <Grid item xs={12} sm={6} md={2}>
-          <FormControl fullWidth size="small">
-            <InputLabel>All Types</InputLabel>
-            <Select
-              value={filters.locationType || ''}
-              onChange={handleChange('locationType')}
-              label="All Types"
-              sx={{ borderRadius: 2 }}
-            >
-              <MenuItem value="">All Types</MenuItem>
-              {locationTypes.map((type) => (
+              <MenuItem value="">All Facility Types</MenuItem>
+              {facilityTypes.map((type) => (
                 <MenuItem key={type} value={type}>
                   {type}
                 </MenuItem>
@@ -141,26 +117,8 @@ function LocationFilters({ filters, onFilterChange }) {
           </FormControl>
         </Grid>
 
-        {/* Status Filter */}
-        <Grid item xs={12} sm={6} md={2}>
-          <FormControl fullWidth size="small">
-            <InputLabel>All Status</InputLabel>
-            <Select
-              value={filters.status || ''}
-              onChange={handleChange('status')}
-              label="All Status"
-              sx={{ borderRadius: 2 }}
-            >
-              <MenuItem value="">All Status</MenuItem>
-              <MenuItem value="Available">Available</MenuItem>
-              <MenuItem value="Occupied">Occupied</MenuItem>
-              <MenuItem value="Closed">Closed</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-
         {/* Accessibility Filter */}
-        <Grid item xs={12} sm={6} md={1}>
+        <Grid item xs={12} sm={6} md={2}>
           <FormControlLabel
             control={
               <Switch
@@ -170,9 +128,9 @@ function LocationFilters({ filters, onFilterChange }) {
               />
             }
             label={
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                <Typography variant="body2">Accessible Only</Typography>
-              </Box>
+              <Typography variant="body2" fontWeight={500}>
+                Accessible Only
+              </Typography>
             }
             sx={{ m: 0 }}
           />
@@ -182,4 +140,4 @@ function LocationFilters({ filters, onFilterChange }) {
   );
 }
 
-export default LocationFilters;
+export default FacilityFilters;

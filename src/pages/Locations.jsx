@@ -12,11 +12,21 @@ import {
   ToggleButtonGroup,
   ToggleButton,
   Paper,
+  Grid,
+  Card,
+  CardContent,
+  Stack,
+  alpha,
 } from '@mui/material';
 import {
   Add as AddIcon,
-  ViewModule as GridIcon,
+  GridView as GridIcon,
   Map as MapIcon,
+  LocationOn as LocationIcon,
+  School as AcademicIcon,
+  Science as LabIcon,
+  Business as OfficeIcon,
+  Construction as FacilityIcon,
 } from '@mui/icons-material';
 import LocationList from '../components/locations/LocationList';
 import LocationFilters from '../components/locations/LocationFilters';
@@ -31,6 +41,37 @@ import {
   useDeleteLocation,
 } from '../hooks/useLocations';
 
+const statsCards = [
+  {
+    title: '240',
+    subtitle: 'Total Locations',
+    icon: <LocationIcon sx={{ fontSize: 32 }} />,
+    color: '#4CAF50',
+    bgColor: '#E8F5E9',
+  },
+  {
+    title: '85',
+    subtitle: 'Classrooms',
+    icon: <AcademicIcon sx={{ fontSize: 32 }} />,
+    color: '#2196F3',
+    bgColor: '#E3F2FD',
+  },
+  {
+    title: '42',
+    subtitle: 'Labs',
+    icon: <LabIcon sx={{ fontSize: 32 }} />,
+    color: '#9C27B0',
+    bgColor: '#F3E5F5',
+  },
+  {
+    title: '113',
+    subtitle: 'Other Locations',
+    icon: <FacilityIcon sx={{ fontSize: 32 }} />,
+    color: '#FF9800',
+    bgColor: '#FFF3E0',
+  },
+];
+
 function Locations() {
   const [filters, setFilters] = useState({
     search: '',
@@ -39,13 +80,12 @@ function Locations() {
     isAccessible: false,
     status: '',
   });
-  const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'map'
+  const [viewMode, setViewMode] = useState('grid');
   const [formOpen, setFormOpen] = useState(false);
   const [editingLocation, setEditingLocation] = useState(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [locationToDelete, setLocationToDelete] = useState(null);
 
-  // API params
   const apiParams = useMemo(() => {
     const params = {};
     if (filters.buildingId) params.buildingId = filters.buildingId;
@@ -55,20 +95,13 @@ function Locations() {
     return params;
   }, [filters]);
 
-  // Fetch locations
   const { data: locations = [], isLoading, error, refetch } = useLocations(apiParams);
-
-  console.log('Fetched locations:', locations);
-
-  // Mutations
   const createMutation = useCreateLocation();
   const updateMutation = useUpdateLocation();
   const deleteMutation = useDeleteLocation();
 
-  // Filter locations locally for search
   const filteredLocations = useMemo(() => {
     if (!filters.search) return locations;
-
     const searchLower = filters.search.toLowerCase();
     return locations.filter(
       (location) =>
@@ -79,7 +112,6 @@ function Locations() {
     );
   }, [locations, filters.search]);
 
-  // Handlers
   const handleCreateClick = () => {
     setEditingLocation(null);
     setFormOpen(true);
@@ -121,12 +153,10 @@ function Locations() {
     }
   };
 
-  // Loading state
   if (isLoading) {
     return <LoadingSpinner message="Loading locations..." />;
   }
 
-  // Error state
   if (error) {
     return (
       <ErrorMessage
@@ -138,74 +168,163 @@ function Locations() {
 
   return (
     <Box>
-      {/* Header */}
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          mb: 3,
-          flexWrap: 'wrap',
-          gap: 2,
-        }}
-      >
-        <div>
-          <Typography variant="h3" component="h1" gutterBottom>
-            Locations
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            Find classrooms, offices, and points of interest
-          </Typography>
-        </div>
-        <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-          {/* View Toggle */}
-          <ToggleButtonGroup
-            value={viewMode}
-            exclusive
-            onChange={handleViewModeChange}
-            size="small"
-          >
-            <ToggleButton value="grid">
-              <GridIcon sx={{ mr: 1 }} />
-              Grid
-            </ToggleButton>
-            <ToggleButton value="map">
-              <MapIcon sx={{ mr: 1 }} />
-              Map
-            </ToggleButton>
-          </ToggleButtonGroup>
-
-          {/* Add Button */}
+      {/* Header with Stats */}
+      <Box sx={{ mb: 3 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+            mb: 3,
+            flexWrap: 'wrap',
+            gap: 2,
+          }}
+        >
+          <Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
+              <LocationIcon sx={{ fontSize: 32, color: 'primary.main' }} />
+              <Typography variant="h4" fontWeight={700}>
+                Locations
+              </Typography>
+            </Box>
+            <Typography variant="body1" color="text.secondary">
+              Find classrooms, offices, and points of interest
+            </Typography>
+          </Box>
           <Button
             variant="contained"
             size="large"
             startIcon={<AddIcon />}
             onClick={handleCreateClick}
-            sx={{ display: { xs: 'none', sm: 'flex' } }}
+            sx={{
+              borderRadius: 2,
+              px: 3,
+              py: 1.25,
+              fontWeight: 600,
+              textTransform: 'none',
+              boxShadow: 'none',
+              '&:hover': {
+                boxShadow: '0 4px 12px rgba(27, 94, 32, 0.3)',
+              },
+            }}
           >
             Add Location
           </Button>
         </Box>
+
+        {/* Stats Cards */}
+        <Grid container spacing={2}>
+          {statsCards.map((stat, index) => (
+            <Grid item xs={6} sm={6} md={3} key={index}>
+              <Card
+                elevation={0}
+                sx={{
+                  bgcolor: stat.bgColor,
+                  border: 'none',
+                  transition: 'transform 0.2s ease',
+                  '&:hover': {
+                    transform: 'translateY(-2px)',
+                  },
+                }}
+              >
+                <CardContent sx={{ p: 2.5 }}>
+                  <Stack direction="row" spacing={2} alignItems="center">
+                    <Box
+                      sx={{
+                        width: 56,
+                        height: 56,
+                        borderRadius: 2,
+                        bgcolor: alpha(stat.color, 0.15),
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: stat.color,
+                      }}
+                    >
+                      {stat.icon}
+                    </Box>
+                    <Box>
+                      <Typography variant="h4" fontWeight={700} color={stat.color}>
+                        {stat.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" fontWeight={500}>
+                        {stat.subtitle}
+                      </Typography>
+                    </Box>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
       </Box>
 
-      {/* Filters */}
-      <LocationFilters filters={filters} onFilterChange={setFilters} />
+      {/* View Toggle and Count */}
+      <Box sx={{ mb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Typography variant="body2" color="text.secondary" fontWeight={500}>
+          All Locations ({filteredLocations.length})
+        </Typography>
+        <ToggleButtonGroup
+          value={viewMode}
+          exclusive
+          onChange={handleViewModeChange}
+          size="small"
+          sx={{
+            '& .MuiToggleButton-root': {
+              borderRadius: 2,
+              px: 2,
+              py: 0.75,
+              textTransform: 'none',
+              fontWeight: 500,
+              border: '1px solid',
+              borderColor: 'divider',
+              '&.Mui-selected': {
+                bgcolor: 'primary.main',
+                color: 'white',
+                '&:hover': {
+                  bgcolor: 'primary.dark',
+                },
+              },
+            },
+          }}
+        >
+          <ToggleButton value="grid">
+            <GridIcon sx={{ mr: 1, fontSize: 18 }} />
+            Grid
+          </ToggleButton>
+          <ToggleButton value="map">
+            <MapIcon sx={{ mr: 1, fontSize: 18 }} />
+            Map
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Box>
 
-      {/* Results Count */}
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        Showing {filteredLocations.length} location{filteredLocations.length !== 1 ? 's' : ''}
-      </Typography>
+      <LocationFilters filters={filters} onFilterChange={setFilters} />
 
       {/* Content */}
       {filteredLocations.length === 0 ? (
-        <Box sx={{ textAlign: 'center', py: 8, px: 2 }}>
-          <Typography variant="h6" color="text.secondary" gutterBottom>
+        <Paper
+          elevation={0}
+          sx={{
+            textAlign: 'center',
+            py: 8,
+            px: 2,
+            border: '1px dashed',
+            borderColor: 'divider',
+            borderRadius: 2,
+          }}
+        >
+          <LocationIcon sx={{ fontSize: 64, color: 'text.disabled', mb: 2 }} />
+          <Typography variant="h6" color="text.secondary" gutterBottom fontWeight={600}>
             No locations found
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
             Try adjusting your filters or create a new location
           </Typography>
-        </Box>
+          <Button variant="contained" startIcon={<AddIcon />} onClick={handleCreateClick}>
+            Add First Location
+          </Button>
+        </Paper>
       ) : viewMode === 'grid' ? (
         <LocationList
           locations={filteredLocations}
@@ -214,7 +333,7 @@ function Locations() {
           showActions={true}
         />
       ) : (
-        <Paper elevation={2} sx={{ p: 2, borderRadius: 2 }}>
+        <Paper elevation={0} sx={{ p: 2, borderRadius: 2, border: '1px solid', borderColor: 'divider' }}>
           <LocationMap
             locations={filteredLocations}
             height="600px"
@@ -223,22 +342,22 @@ function Locations() {
         </Paper>
       )}
 
-      {/* Floating Action Button (Mobile) */}
+      {/* Floating Action Button */}
       <Fab
         color="primary"
         aria-label="add"
         sx={{
           position: 'fixed',
-          bottom: 16,
-          right: 16,
+          bottom: 24,
+          right: 24,
           display: { xs: 'flex', sm: 'none' },
+          boxShadow: '0 4px 12px rgba(27, 94, 32, 0.3)',
         }}
         onClick={handleCreateClick}
       >
         <AddIcon />
       </Fab>
 
-      {/* Location Form Dialog */}
       <LocationForm
         open={formOpen}
         onClose={() => setFormOpen(false)}
@@ -246,23 +365,28 @@ function Locations() {
         initialData={editingLocation}
       />
 
-      {/* Delete Confirmation Dialog */}
-      <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
-        <DialogTitle>Confirm Delete</DialogTitle>
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={() => setDeleteDialogOpen(false)}
+        PaperProps={{ sx: { borderRadius: 2, maxWidth: 400 } }}
+      >
+        <DialogTitle sx={{ fontWeight: 600 }}>Confirm Delete</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete{' '}
-            <strong>{locationToDelete?.locationName}</strong>? This action cannot be
-            undone.
+            Are you sure you want to delete <strong>{locationToDelete?.locationName}</strong>? This
+            action cannot be undone.
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
+        <DialogActions sx={{ px: 3, pb: 2.5 }}>
+          <Button onClick={() => setDeleteDialogOpen(false)} sx={{ textTransform: 'none' }}>
+            Cancel
+          </Button>
           <Button
             onClick={handleDeleteConfirm}
             color="error"
             variant="contained"
             disabled={deleteMutation.isPending}
+            sx={{ textTransform: 'none' }}
           >
             {deleteMutation.isPending ? 'Deleting...' : 'Delete'}
           </Button>

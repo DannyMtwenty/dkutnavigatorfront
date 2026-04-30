@@ -10,6 +10,8 @@ import {
   Chip,
   Stack,
   alpha,
+  IconButton,
+  
 } from '@mui/material';
 import {
   LocationOn as LocationIcon,
@@ -21,6 +23,8 @@ import {
   Videocam as CctvIcon,
   ArrowForward as ArrowIcon,
   Layers as LayersIcon,
+  Edit as EditIcon,
+  Delete as DeleteIcon,
 } from '@mui/icons-material';
 
 function BuildingCard({ building, onEdit, onDelete, showActions = false }) {
@@ -349,6 +353,24 @@ function BuildingCard({ building, onEdit, onDelete, showActions = false }) {
         >
           View Details
         </Button>
+        {showActions && (
+          <Box>
+            <IconButton
+              size="small"
+              color="primary"
+              onClick={() => onEdit && onEdit(building)}
+            >
+              <EditIcon />
+            </IconButton>
+            <IconButton
+              size="small"
+              color="error"
+              onClick={() => onDelete && onDelete(building.buildingId)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Box>
+        )}
       </CardActions>
     </Card>
   );
