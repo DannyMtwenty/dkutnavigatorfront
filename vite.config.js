@@ -40,10 +40,14 @@ export default defineConfig(({ mode }) => {
       // Additional production optimizations
       rollupOptions: {
         output: {
-          manualChunks: {
-            vendor: ['react', 'react-dom', 'react-router-dom'],
-            mui: ['@mui/material', '@mui/icons-material'],
-            maps: ['leaflet', 'react-leaflet'],
+         manualChunks(id) {
+            if (id.includes('node_modules')) {
+              if (id.includes('@mui')) return 'mui';
+              if (id.includes('react')) return 'react';
+              if (id.includes('leaflet')) return 'leaflet';
+              if (id.includes('recharts')) return 'recharts';
+              return 'vendor';
+            }
           }
         }
       }

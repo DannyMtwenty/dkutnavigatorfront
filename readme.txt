@@ -43,5 +43,8 @@ npm install react-hot-toast
 # Icons
 npm install lucide-react
 
+ #for charts e.g.  pieChart, Graph,
+npm install recharts
+
 #create multiple folders
 mkdir -p src/{api,components/{common,buildings,locations,facilities,maps},hooks,layouts,pages,store,utils,styles}
