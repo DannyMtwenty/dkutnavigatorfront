@@ -30,6 +30,7 @@ function FacilityCard({ facility }) {
   const navigate = useNavigate();
 
   const handleViewDetails = () => {
+     
     navigate(`/facilities/${facility.facilityId}`);
   };
 

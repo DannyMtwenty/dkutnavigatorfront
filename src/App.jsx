@@ -16,6 +16,8 @@ import FacilityDetail from './pages/FacilityDetail'   //should match the file na
 import Search from './pages/Search'
 import Map from './pages/Map'
 import NotFound from './pages/NotFound'
+import Rautes from './pages/Routes';
+
 import 'leaflet/dist/leaflet.css';
 
 function App() {
@@ -30,7 +32,8 @@ function App() {
         <Route path="facilities" element={<Facilities />} />
         <Route path="facilities/:id" element={<FacilityDetail />} />
         <Route path="search" element={<Search />} />
-        <Route path="map" element={<Map />} />
+        <Route path="map" element={<Map />} />        
+        <Route path="routes" element={<Rautes />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

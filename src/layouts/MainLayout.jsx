@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import EnvironmentBadge from '../components/EnvironmentBadge';
 import {
   AppBar,
   Box,
@@ -79,6 +80,8 @@ function MainLayout() {
       navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
     }
   };
+
+  
 
   const drawer = (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -385,5 +388,8 @@ function MainLayout() {
     </Box>
   );
 }
+
+// Add at the bottom of your layout
+<EnvironmentBadge />
 
 export default MainLayout;

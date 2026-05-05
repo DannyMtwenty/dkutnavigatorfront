@@ -1,2 +1,15 @@
    #cpy to server 241
 scp -r dist SDCACCOUNT@41.89.227.241:"C:\inetpub\wwwroot\dkut_nav_frontend"
+
+# Run development server (uses .env.development)
+npm run dev
+
+# Build for development
+npm run build:dev
+   
+   Production
+# Build for production (uses .env.production)
+npm run build
+
+# Preview production build
+npm run preview

@@ -158,7 +158,7 @@ function LocationDetail() {
             },
           }}
         >
-          Back to Locations.......
+          Back to Locations
         </Button>
 
         <Box
